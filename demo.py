@@ -14,12 +14,19 @@ from sklearn.linear_model import ElasticNet
 from urllib.parse import urlparse
 import mlflow
 import mlflow.sklearn
+import dagshub
 
 import logging
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
+# initialise dagshub:
+dagshub.init(repo_owner='yuvaneshkm', repo_name='mlflow-demo', mlflow=True)
+
+# set tracking uri:
+remote_server_uri = "https://dagshub.com/yuvaneshkm/mlflow-demo.mlflow"
+mlflow.set_tracking_uri(remote_server_uri)
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
